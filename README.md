@@ -2,6 +2,9 @@
 Erigeron Logo
 ----
 
+Example:
+
+![](http://cdn.tiye.me/logo/erigeron.png)
 
 ### Workflow
 
