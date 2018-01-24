@@ -6,7 +6,8 @@
             [app.schema :as schema]
             [reel.util :refer [id!]]
             [reel.core :refer [reel-updater refresh-reel listen-devtools!]]
-            [reel.schema :as reel-schema]))
+            [reel.schema :as reel-schema]
+            [app.logo :refer [create-logo! update-logo!]]))
 
 (defonce *reel
   (atom (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))))
@@ -27,11 +28,13 @@
   (render-app! render!)
   (add-watch *reel :changes (fn [] (render-app! render!)))
   (listen-devtools! "a" dispatch!)
+  (create-logo! (:store @*reel))
   (println "App started."))
 
 (defn reload! []
   (clear-cache!)
   (reset! *reel (refresh-reel @*reel schema/store updater))
+  (update-logo! (:store @*reel))
   (println "Code updated."))
 
 (set! (.-onload js/window) main!)

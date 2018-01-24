@@ -7,11 +7,10 @@
              [defcomp cursor-> action-> mutation-> <> div button textarea span]]
             [verbosely.core :refer [verbosely!]]
             [respo.comp.space :refer [=<]]
-            [reel.comp.reel :refer [comp-reel]]
-            [app.comp.logo :refer [comp-logo]]))
+            [reel.comp.reel :refer [comp-reel]]))
 
 (defcomp
  comp-container
  (reel)
  (let [store (:store reel), states (:states store)]
-   (div {} (comp-logo (:options store)) (cursor-> :reel comp-reel states reel {}))))
+   (div {} (div {:class-name "container"}) (cursor-> :reel comp-reel states reel {}))))
