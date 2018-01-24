@@ -276,7 +276,7 @@
              "T" {
               :type :expr, :by "root", :at 1516811643756, :id "S1NKSVUrG"
               :data {
-               "T" {:type :leaf, :by "root", :at 1516811652725, :text "PIXI.DisplayObjectContainer.", :id "S1NKSVUrGleaf"}
+               "T" {:type :leaf, :by "root", :at 1516812567460, :text "PIXI.Container.", :id "S1NKSVUrGleaf"}
               }
              }
             }
@@ -368,7 +368,7 @@
                  "j" {:type :leaf, :by "root", :at 1516812076394, :text "graphics", :id "ryWmNPELrG"}
                 }
                }
-               "r" {:type :leaf, :by "root", :at 1516812134476, :text "0.8", :id "rkl8EDNISG"}
+               "r" {:type :leaf, :by "root", :at 1516812549533, :text "0.6", :id "rkl8EDNISG"}
               }
              }
              "r" {
@@ -380,14 +380,14 @@
                 :type :expr, :by "root", :at 1516805322811, :id "rJmA2zUBf"
                 :data {
                  "D" {:type :leaf, :by "root", :at 1516805468760, :text ".beginFill", :id "HJDRnzUrz"}
-                 "j" {:type :leaf, :by "root", :at 1516812330160, :text "0xffee88", :id "Sy0C3zLBM"}
+                 "j" {:type :leaf, :by "root", :at 1516812551537, :text "0xffee44", :id "Sy0C3zLBM"}
                 }
                }
                "h" {
                 :type :expr, :by "root", :at 1516809657857, :id "HJgfa6mIrz"
                 :data {
                  "T" {:type :leaf, :by "root", :at 1516809661258, :text ".lineStyle", :id "HJgfa6mIrzleaf"}
-                 "j" {:type :leaf, :by "root", :at 1516812304629, :text "4", :id "SkwpaXIrG"}
+                 "j" {:type :leaf, :by "root", :at 1516812537725, :text "0", :id "SkwpaXIrG"}
                  "r" {:type :leaf, :by "root", :at 1516812170491, :text "0x8888ff", :id "rJxOapXLrM"}
                  "v" {:type :leaf, :by "root", :at 1516809670299, :text "1", :id "SyRppmUSM"}
                 }
