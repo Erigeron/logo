@@ -7,20 +7,18 @@
 
 (defn create-logo! [store]
   (.appendChild (.querySelector js/document ".container") pixi-app.view)
-  (let [container (PIXI.Container.)]
-    (.addChild pixi-app.stage container)
-    (-> container .-position (.set 200 200))
-    (dotimes [n 8]
-      (let [graphics (PIXI.Graphics.)]
-        (-> graphics .-transform .-pivot (.set 0 0))
-        (set! (.-alpha graphics) 0.6)
-        (-> graphics
-            (.beginFill 0xffee44)
-            (.lineStyle 0 0x8888ff 1)
-            (.drawEllipse 0 96 28 96)
-            (.endFill))
-        (set! (.-rotation graphics) (* n (/ js/Math.PI 4)))
-        (.addChild container graphics)))))
+  (dotimes [n 8]
+    (let [g (PIXI.Graphics.)]
+      (-> g
+          (.beginFill 0xffee44)
+          (.lineStyle 0 0x8888ff 1)
+          (.drawEllipse 0 96 28 96)
+          (.endFill))
+      (-> g .-alpha (set! 0.6))
+      (-> g .-transform .-pivot (.set 0 0))
+      (-> g .-position (.set 200 200))
+      (-> g .-rotation (set! (* n (/ js/Math.PI 4))))
+      (.addChild pixi-app.stage g))))
 
 (defn update-logo! [store]
   (.log js/console pixi-app.stage)
