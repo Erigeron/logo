@@ -2,13 +2,13 @@
 (ns app.logo (:require ["pixi.js" :as PIXI]))
 
 (defonce pixi-app
-  (PIXI.Application.
+  (PIXI/Application.
    (clj->js {:width 400, :height 400, :transparent true, :antialias true, :resolution 1})))
 
 (defn create-logo! [store]
   (.appendChild (.querySelector js/document ".container") pixi-app.view)
   (dotimes [n 8]
-    (let [g (PIXI.Graphics.)]
+    (let [g (PIXI/Graphics.)]
       (-> g
           (.beginFill 0xffee44)
           (.lineStyle 0 0x8888ff 1)

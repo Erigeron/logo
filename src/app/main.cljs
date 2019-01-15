@@ -4,19 +4,25 @@
             [app.comp.container :refer [comp-container]]
             [app.updater :refer [updater]]
             [app.schema :as schema]
-            [reel.util :refer [id!]]
-            [reel.core :refer [reel-updater refresh-reel listen-devtools!]]
+            [reel.util :refer [listen-devtools!]]
+            [reel.core :refer [reel-updater refresh-reel]]
             [reel.schema :as reel-schema]
-            [app.logo :refer [create-logo! update-logo!]]))
+            [app.logo :refer [create-logo! update-logo!]]
+            [cumulo-util.core :refer [repeat!]]
+            [app.config :as config]
+            [cljs.reader :refer [read-string]]))
 
 (defonce *reel
   (atom (-> reel-schema/reel (assoc :base schema/store) (assoc :store schema/store))))
 
 (defn dispatch! [op op-data]
-  (let [op-id (id!), next-reel (reel-updater updater @*reel op op-data op-id)]
-    (reset! *reel next-reel)))
+  (when config/dev? (println "Dispatch:" op))
+  (reset! *reel (reel-updater updater @*reel op op-data)))
 
 (def mount-target (.querySelector js/document ".app"))
+
+(defn persist-storage! []
+  (.setItem js/localStorage (:storage-key config/site) (pr-str (:store @*reel))))
 
 (defn render-app! [renderer]
   (renderer mount-target (comp-container @*reel) #(dispatch! %1 %2)))
@@ -24,10 +30,15 @@
 (def ssr? (some? (js/document.querySelector "meta.respo-ssr")))
 
 (defn main! []
+  (println "Running mode:" (if config/dev? "dev" "release"))
   (if ssr? (render-app! realize-ssr!))
   (render-app! render!)
   (add-watch *reel :changes (fn [] (render-app! render!)))
   (listen-devtools! "a" dispatch!)
+  (.addEventListener js/window "beforeunload" persist-storage!)
+  (repeat! 60 persist-storage!)
+  (let [raw (.getItem js/localStorage (:storage-key config/site))]
+    (when (some? raw) (dispatch! :hydrate-storage (read-string raw))))
   (create-logo! (:store @*reel))
   (println "App started."))
 
@@ -36,5 +47,3 @@
   (reset! *reel (refresh-reel @*reel schema/store updater))
   (update-logo! (:store @*reel))
   (println "Code updated."))
-
-(set! (.-onload js/window) main!)

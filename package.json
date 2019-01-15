@@ -2,19 +2,14 @@
   "name": "erigeron-logo",
   "version": "0.1.0",
   "scripts": {
-    "cdn": "rsync -avr --progress dist/* tiye.me:cdn/erigeron-logo",
-    "tiye": "rsync -avr --progress dist/{index.html,manifest.json} tiye.me:repo/Erigeron/logo/",
-    "upload": "yarn cdn && yarn tiye",
-    "release": "shadow-cljs release browser",
-    "watch": "shadow-cljs watch browser",
-    "compile-ssr": "shadow-cljs compile ssr",
-    "html-dev": "env=dev node target/ssr.js && cp entry/manifest.json target/",
-    "html": "node target/ssr.js && cp entry/manifest.json dist/",
-    "index.html": "yarn compile-ssr && yarn html-dev",
-    "del": "rm -rf dist/*",
+    "watch": "shadow-cljs watch client",
     "serve": "http-server dist -s",
-    "build": "yarn del && yarn release && yarn compile-ssr && yarn html",
-    "build2": "shadow-cljs clj-run build.release/-main"
+    "build-cdn": "shadow-cljs clj-run build.main/build-cdn",
+    "build": "shadow-cljs clj-run build.main/build",
+    "upload": "node target/upload.js",
+    "up": "yarn build-cdn && yarn upload",
+    "page": "shadow-cljs clj-run build.main/page",
+    "ln": "cd target && rm -f entry && ln -s ../entry"
   },
   "repository": {
     "type": "git",
@@ -24,9 +19,10 @@
   "license": "MIT",
   "devDependencies": {
     "http-server": "^0.11.1",
-    "shadow-cljs": "^2.0.142"
+    "shadow-cljs": "^2.7.15"
   },
   "dependencies": {
-    "pixi.js": "^4.7.0"
+    "pixi.js": "^4.7.0",
+    "shortid": "^2.2.14"
   }
 }
